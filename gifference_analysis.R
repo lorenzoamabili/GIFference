@@ -13,7 +13,7 @@ library("Hmisc")
 library("MASS")
 
 # Loading the data
-data = read_excel('/Users/lorenzoamabili/Library/Mobile Documents/com~apple~CloudDocs/GIFferences/gifference_data.xlsx')
+data = read_excel('gifference_data.xlsx')
 data[data  == 'NA'] = NA # missing data
 data[!complete.cases(data),]
 data = data %>% 
@@ -45,17 +45,20 @@ str(data)
 # the ratio consumption time/GIF duration cannot be calculated
 data_no_static_viz = data[which(data$variant != 1), ]
 
+# Setting the GIF with smooth transition as the reference variant level
+data$variant <- ordered(data$variant, levels = c("3", "2", "1", "4"))
+
 # Descriptive statistics and related plots - Average score
 c = data %>%
   group_by(variant) %>%
   get_summary_stats(average_score, type = "mean_sd")
 
 c_plot = ggplot(c, aes(x=variant, y=mean)) +
-  geom_point(aes(color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video"))) +
-  geom_crossbar(data=c, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video")), 
+  geom_point(aes(color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video"))) +
+  geom_crossbar(data=c, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video")), 
                 width=.2, position=position_dodge(0.05)) + ylim(0, 1.05) +
   labs(x = "Variant", y = "Average score") + 
-  scale_color_discrete(breaks=c("Static Viz", "GIF Inter", "GIF ST", "Data-video")) + 
+  scale_color_discrete(breaks=c("GIF ST", "GIF Inter", "Static Viz", "Data-video")) + 
   theme_bw() + theme(axis.ticks.x=element_blank(),
                      axis.text.x=element_blank(),
                      axis.text=element_text(size=25),
@@ -127,11 +130,11 @@ c_time = data %>%
   get_summary_stats(time_s, type = "mean_sd")
 
 c_time_plot = ggplot(c_time, aes(x=variant, y=mean)) +
-  geom_point(aes(color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video"))) +
-  geom_crossbar(data=c_time, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video")), 
+  geom_point(aes(color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video"))) +
+  geom_crossbar(data=c_time, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video")), 
                 width=.2, position=position_dodge(0.05)) + ylim(0, 100) +
   labs(x = "Variant", y = "Time in seconds") + 
-  scale_color_discrete(breaks=c("Static Viz", "GIF Inter", "GIF ST", "Data-video")) + 
+  scale_color_discrete(breaks=c("GIF ST", "GIF Inter", "Static Viz", "Data-video")) + 
   theme_bw() + theme(axis.text=element_text(size=25),
                      axis.title=element_text(size=30),
                      axis.ticks.x=element_blank(),
@@ -224,11 +227,11 @@ c_x = data %>%
   get_summary_stats(x_score, type = "mean_sd")
 
 c_x_plot = ggplot(c_x, aes(x=variant, y=mean)) +
-  geom_point(aes(color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video"))) +
-  geom_crossbar(data=c_x, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video")), 
+  geom_point(aes(color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video"))) +
+  geom_crossbar(data=c_x, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video")), 
                 width=.2, position=position_dodge(0.05)) + ylim(0, 1.05) +
   labs(x = "Variant", y = "X score") + 
-  scale_color_discrete(breaks=c("Static Viz", "GIF Inter", "GIF ST", "Data-video")) + 
+  scale_color_discrete(breaks=c("GIF ST", "GIF Inter", "Static Viz", "Data-video")) + 
   theme_bw() + theme(axis.text=element_text(size=25),
                      axis.title=element_text(size=30),
                      axis.ticks.x=element_blank(),
@@ -302,11 +305,11 @@ c_y = data %>%
   get_summary_stats(y_score, type = "mean_sd")
 
 c_y_plot = ggplot(c_y, aes(x=variant, y=mean)) +
-  geom_point(aes(color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video"))) +
-  geom_crossbar(data=c_y, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video")), 
+  geom_point(aes(color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video"))) +
+  geom_crossbar(data=c_y, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video")), 
                 width=.2, position=position_dodge(0.05)) + ylim(0, 1.05) +
   labs(x = "Variant", y = "Y score") + 
-  scale_color_discrete(breaks=c("Static Viz", "GIF Inter", "GIF ST", "Data-video")) + 
+  scale_color_discrete(breaks=c("GIF ST", "GIF Inter", "Static Viz", "Data-video")) + 
   theme_bw() + theme(axis.text=element_text(size=25),
                      axis.title=element_text(size=30),
                      axis.ticks.x=element_blank(),
@@ -380,11 +383,11 @@ c_z = data %>%
   get_summary_stats(z_score, type = "mean_sd")
 
 c_z_plot = ggplot(c_z, aes(x=variant, y=mean)) +
-  geom_point(aes(color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video"))) +
-  geom_crossbar(data=c_z, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("Static Viz", "GIF Inter", "GIF ST", "Data-video")), 
+  geom_point(aes(color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video"))) +
+  geom_crossbar(data=c_z, aes(x=variant, ymin=mean-sd/2, ymax=mean+sd/2 , color = c("GIF ST", "GIF Inter", "Static Viz", "Data-video")), 
                 width=.2, position=position_dodge(0.05)) + ylim(0, 1.05) +
   labs(x = "Variant", y = "Z score") + 
-  scale_color_discrete(breaks=c("Static Viz", "GIF Inter", "GIF ST", "Data-video")) + 
+  scale_color_discrete(breaks=c("GIF ST", "GIF Inter", "Static Viz", "Data-video")) + 
   theme_bw() + theme(axis.text=element_text(size=25),
                      axis.title=element_text(size=30),
                      axis.ticks.x=element_blank(),
@@ -473,7 +476,7 @@ g_z_plot
 
 
 # Descriptive statistics and related plots - Consumption time/GIF duration
-c_td = data_no_static_viz %>%
+c_td = data %>%
   group_by(variant) %>%
   get_summary_stats(loops, type = "mean_sd")
 
@@ -487,7 +490,7 @@ c_td_plot = ggplot(c_td, aes(x=variant, y=mean)) +
                      axis.text=element_text(size=25),
                      axis.title=element_text(size=30),
                      legend.position="none") + 
-  scale_color_manual(breaks = c("2", "3", "4"), values=c("#bdd780", "#80dfe1", "#f69891"))
+  scale_color_manual(values=c("#80dfe1", "#bdd780", "#FFFFFF", "#f69891"))
 
 c_td_plot$labels$colour = "Variant"
 c_td_plot
@@ -559,7 +562,7 @@ data$y_score = as.factor(data$y_score)
 data$z_score = as.factor(data$z_score)
 data$average_score = as.factor(data$average_score)
 
-# Setting the GIF with smooth transition as the reference variant and the medium VL_level as the reference vl_level
+# Setting the medium VL_level as the reference vl_level level
 data = within(data, variant <- relevel(variant, ref = 3))
 data = within(data, vl_level <- relevel(vl_level, ref = 2))
 

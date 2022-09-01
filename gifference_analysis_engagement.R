@@ -13,7 +13,7 @@ library("car")
 library("Hmisc")
 
 # Loading the data
-data = read_excel('/Users/lorenzoamabili/Library/Mobile Documents/com~apple~CloudDocs/GIFferences/gifference_data_engagement.xlsx')
+data = read_excel('gifference_data_engagement.xlsx')
 data = as.data.frame(data)
 
 # Preparing the data
