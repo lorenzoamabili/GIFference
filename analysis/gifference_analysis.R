@@ -43,10 +43,7 @@ str(data)
 
 # Creating a data set without the observations related to the static visualizations where 
 # the ratio consumption time/GIF duration cannot be calculated
-data_no_static_viz = data[which(data$variant != 1), ]
-
-# Setting the GIF with smooth transition as the reference variant level
-data$variant <- ordered(data$variant, levels = c("3", "2", "1", "4"))
+data_no_static_viz = data[which(data$variant != "V3"), ]
 
 # Descriptive statistics and related plots - Average score
 c = data %>%
@@ -563,8 +560,7 @@ data$z_score = as.factor(data$z_score)
 data$average_score = as.factor(data$average_score)
 
 # Setting the medium VL_level as the reference vl_level level
-data = within(data, variant <- relevel(variant, ref = 3))
-data = within(data, vl_level <- relevel(vl_level, ref = 2))
+data = within(data, vl_level <- relevel(vl_level, ref = "medium"))
 
 
 ### First investigation ###
@@ -603,17 +599,17 @@ brant(model1)
 # For viewers exposed to scenario A8, the odds of obtaining a higher average score are 4.75 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
-# 1/0.4017378 = 2.49
+# 1/0.4017732 = 2.49
 # For viewers watching GIFs with smooth transitions, the odds of obtaining a higher average score are 2.49 times that
 # of viewers watching static visualizations, holding constant all other variables.
-
-# Whatever are the odds of obtaining a higher average score for viewers with a medium level of visualization literacy watching static visualizations and 
-# for viewers with a medium level of visualization literacy but watching GIFs with smooth transitions, 
-# viewers with a high level of visualization literacy are 7.09 times more likely to obtaining it.
 
 # Whatever are the odds of obtaining a higher average score for viewers with a medium level of visualization literacy watching GIFs with interchangeability and 
 # for viewers with a medium level of visualization literacy but watching GIFs with smooth transitions, 
 # viewers with a high level of visualization literacy are 4.42 times more likely to obtaining it.
+
+# Whatever are the odds of obtaining a higher average score for viewers with a medium level of visualization literacy watching static visualizations and 
+# for viewers with a medium level of visualization literacy but watching GIFs with smooth transitions, 
+# viewers with a high level of visualization literacy are 7.09 times more likely to obtaining it.
 
 # Whatever are the odds of obtaining a higher average score for viewers with a medium level of visualization literacy watching data-videos and 
 # for viewers with a medium level of visualization literacy but watching GIFs with smooth transitions, 
@@ -622,25 +618,25 @@ brant(model1)
 
 # Post-hoc power analysis
 table(data$average_score)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 2.6041538, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.7636005, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 19.1594714, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 1.7566023, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 3.5443858, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 7.5199098, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.7543856, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 1.1744963, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.4017378, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.5830543, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.9314050, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.6329000, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.5920492, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.7996940, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 1.3173958, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.3216571, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 7.0890309, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.4199595, 384, alpha=0.05)
-popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.7707272, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 2.6040862, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.7635402, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 19.1569187, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 1.7565927, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 3.5442029, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 7.5193305, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.7541022, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.8514288, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.5830944, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.4017732, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.9315587, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.5920661, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.6330460, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.4196707, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 7.0893796, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 4.7697392, 384, alpha=0.05) #
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 1.3170242, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.7995531, 384, alpha=0.05)
+popower(c(1/384,  5/384, 5/384, 6/384,  17/384, 18/384, 21/384, 42/384, 50/384, 40/384, 179/384), 0.3215637, 384, alpha=0.05)
 
 # Anova for testing H3 and H4
 data$average_score = as.numeric(data$average_score)
@@ -724,8 +720,8 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(scenario, gender) %>%
   anova_test(dv = time_s, wid = participant_id, between = c(variant, vl_level), type = 2) %>% View()
-# scenario A2, gender 2
-# scenario A6, gender 1
+# scenario A2, gender F
+# scenario A6, gender M
 
 
 # based on the significant three-way interaction effect gender:vl_level:scenario
@@ -738,20 +734,20 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(variant) %>%
   anova_test(dv = time_s, wid = participant_id, between = c(vl_level, gender), type = 2) %>% View()
-# variant 1 and 2
+# V2 and V3
 
 data_no_outliers2 %>% 
   group_by(variant, gender) %>%
   anova_test(dv = time_s, wid = participant_id, between = vl_level, type = 2) %>% View()
-# variant 1, gender 1
-# variant 2, gender 1 and 2
+# V2, M and F
+# V3, M
 
 data_no_outliers2 %>% 
   group_by(variant, gender) %>%
   pairwise_t_test(time_s ~ vl_level, p.adjust.method = "bonferroni") %>% View()
-# variant 1, gender 1, vl_level 2 vs 3 (p-adj = 0.039)
-# variant 2, gender 1, vl_level 1 vs 2 (p-adj = 0.001)
-# variant 2, gender 2, vl_level 2 vs 3 (p-adj = 0.015)
+# V3, M, VL medium vs VL high (p-adj = 0.039)
+# V2, M, VL low vs VL medium (p-adj = 0.001)
+# V2, F, VL medium vs VL high (p-adj = 0.015)
 
 # based on the significant three-way interaction effect gender:variant:scenario
 data_no_outliers2 %>% 
@@ -762,16 +758,16 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(scenario, gender) %>%
   anova_test(dv = time_s, wid = participant_id, between = variant, type = 2) %>% View()
-# scenario A6, gender 1 and 2
-# scenario A8, gender 2
+# scenario A6, M and F
+# scenario A8, F
 
 data_no_outliers2 %>% 
   group_by(scenario, gender) %>%
   pairwise_t_test(time_s ~ variant, p.adjust.method = "bonferroni") %>% View()
-# scenario A6 and gender 1, variant 1 vs 4 (p-adj = 0.024)
-# scenario A6 and gender 2, variant 2 vs 4 (p-adj = 0.037)
-# scenario A8 and gender 2, variant 1 vs 2 (p-adj = 0.013)
-# scenario A8 and gender 2, variant 1 vs 4 (p-adj = 0.007)
+# scenario A6 and M, V3 vs V4 (p-adj = 0.024)
+# scenario A6 and F, V2 vs V4 (p-adj = 0.037)
+# scenario A8 and F, V2 vs V3 (p-adj = 0.013)
+# scenario A8 and F, V3 vs V4 (p-adj = 0.007)
 
 # based on the significant three-way interaction effect variant:vl_level:scenario
 data_no_outliers2 %>% 
@@ -782,25 +778,25 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(scenario, vl_level) %>%
   anova_test(dv = time_s, wid = participant_id, between = variant) %>% View()
-# scenario A3, vl_level 1
+# scenario A3, VL low
 
 data_no_outliers2 %>% 
   group_by(scenario, vl_level) %>%
   pairwise_t_test(time_s ~ variant, p.adjust.method = "bonferroni") %>% View()
-# scenario A3 and vl_level 1, variant 1 vs 4 (p-adj = 0.001)
-# scenario A3 and vl_level 1, variant 2 vs 4 (p-adj = 0.002)
-# scenario A3 and vl_level 1, variant 3 vs 4 (p-adj = 0.020)
+# scenario A3 and VL low, V1 vs V4 (p-adj = 0.020)
+# scenario A3 and VL low, V2 vs V4 (p-adj = 0.002)
+# scenario A3 and VL low, V3 vs V4 (p-adj = 0.001)
 
 data_no_outliers2 %>% 
   group_by(scenario, variant) %>%
   anova_test(dv = time_s, wid = participant_id, between = vl_level) %>% View()
-# scenario A3, variant 3 and 4
+# scenario A3, V1 and V4
 
 data_no_outliers2 %>% 
   group_by(scenario, variant) %>%
   pairwise_t_test(time_s ~ vl_level, p.adjust.method = "bonferroni") %>% View()
-# scenario A3 and variant 3, vl_level 1 vs 3 (p-adj = 0.037)
-# scenario A3 and variant 4, vl_level 1 vs 2 (p-adj = 0.007)
+# scenario A3 and V1, VL low vs VL high (p-adj = 0.037)
+# scenario A3 and V4, VL low vs VL medium (p-adj = 0.007)
 
 
 # based on the significant two-way interaction effect vl_level:scenario
@@ -812,48 +808,48 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(scenario) %>%
   pairwise_t_test(time_s ~ vl_level, p.adjust.method = "bonferroni") %>% View()
-# scenario A2, vl_level 1 and 2 (p-adj = 0.039) 
+# scenario A2, VL low and VL medium (p-adj = 0.039) 
 
 data_no_outliers2 %>% 
   group_by(vl_level) %>%
   anova_test(dv = time_s, wid = participant_id, between = scenario) %>% View()
-# vl_level 1, 2 and 3
+# VL low, VL medium and VL high
 
 data_no_outliers2 %>% 
   group_by(vl_level) %>%
   pairwise_t_test(time_s ~ scenario, p.adjust.method = "bonferroni", paired = TRUE) %>% View()
-# vl_level 1, scenario A1 and A4 (p-adj = 0.001) 
-# vl_level 1, scenario A1 and A6 (p-adj = 0.001) 
-# vl_level 1, scenario A1 and A7 (p-adj = 0.001) 
-# vl_level 1, scenario A1 and A8 (p-adj = 0.001) 
-# vl_level 1, scenario A2 and A4 (p-adj = 0.011) 
-# vl_level 1, scenario A3 and A7 (p-adj = 0.003) 
-# vl_level 1, scenario A3 and A8 (p-adj = 0.039) 
-# vl_level 1, scenario A5 and A6 (p-adj = 0.005) 
-# vl_level 1, scenario A5 and A7 (p-adj = 0.024) 
-# vl_level 1, scenario A5 and A8 (p-adj = 0.008) 
-# vl_level 2, scenario A1 and A2 (p-adj = 0.008) 
-# vl_level 2, scenario A1 and A4 (p-adj = 0.001) 
-# vl_level 2, scenario A1 and A7 (p-adj = 0.001) 
-# vl_level 2, scenario A1 and A8 (p-adj = 0.001) 
-# vl_level 2, scenario A2 and A3 (p-adj = 0.001) 
-# vl_level 2, scenario A2 and A8 (p-adj = 0.044) 
-# vl_level 2, scenario A3 and A4 (p-adj = 0.001) 
-# vl_level 2, scenario A3 and A5 (p-adj = 0.011) 
-# vl_level 2, scenario A3 and A6 (p-adj = 0.009) 
-# vl_level 2, scenario A3 and A7 (p-adj = 0.001) 
-# vl_level 2, scenario A3 and A8 (p-adj = 0.001) 
-# vl_level 2, scenario A4 and A5 (p-adj = 0.004) 
-# vl_level 2, scenario A5 and A7 (p-adj = 0.001) 
-# vl_level 2, scenario A5 and A8 (p-adj = 0.001) 
-# vl_level 3, scenario A1 and A4 (p-adj = 0.001) 
-# vl_level 3, scenario A1 and A7 (p-adj = 0.007) 
-# vl_level 3, scenario A1 and A8 (p-adj = 0.008) 
-# vl_level 3, scenario A3 and A4 (p-adj = 0.002) 
-# vl_level 3, scenario A3 and A7 (p-adj = 0.007) 
-# vl_level 3, scenario A4 and A5 (p-adj = 0.001) 
-# vl_level 3, scenario A5 and A6 (p-adj = 0.006) 
-# vl_level 3, scenario A5 and A7 (p-adj = 0.003) 
+# VL low, scenario A1 and A4 (p-adj = 0.001) 
+# VL low, scenario A1 and A6 (p-adj = 0.001) 
+# VL low, scenario A1 and A7 (p-adj = 0.001) 
+# VL low, scenario A1 and A8 (p-adj = 0.001) 
+# VL low, scenario A2 and A4 (p-adj = 0.011) 
+# VL low, scenario A3 and A7 (p-adj = 0.003) 
+# VL low, scenario A3 and A8 (p-adj = 0.039) 
+# VL low, scenario A5 and A6 (p-adj = 0.005) 
+# VL low, scenario A5 and A7 (p-adj = 0.024) 
+# VL low, scenario A5 and A8 (p-adj = 0.008) 
+# VL medium, scenario A1 and A2 (p-adj = 0.008) 
+# VL medium, scenario A1 and A4 (p-adj = 0.001) 
+# VL medium, scenario A1 and A7 (p-adj = 0.001) 
+# VL medium, scenario A1 and A8 (p-adj = 0.001) 
+# VL medium, scenario A2 and A3 (p-adj = 0.001) 
+# VL medium, scenario A2 and A8 (p-adj = 0.044) 
+# VL medium, scenario A3 and A4 (p-adj = 0.001) 
+# VL medium, scenario A3 and A5 (p-adj = 0.011) 
+# VL medium, scenario A3 and A6 (p-adj = 0.009) 
+# VL medium, scenario A3 and A7 (p-adj = 0.001) 
+# VL medium, scenario A3 and A8 (p-adj = 0.001) 
+# VL medium, scenario A4 and A5 (p-adj = 0.004) 
+# VL medium, scenario A5 and A7 (p-adj = 0.001) 
+# VL medium, scenario A5 and A8 (p-adj = 0.001) 
+# VL high, scenario A1 and A4 (p-adj = 0.001) 
+# VL high, scenario A1 and A7 (p-adj = 0.007) 
+# VL high, scenario A1 and A8 (p-adj = 0.008) 
+# VL high, scenario A3 and A4 (p-adj = 0.002) 
+# VL high, scenario A3 and A7 (p-adj = 0.007) 
+# VL high, scenario A4 and A5 (p-adj = 0.001) 
+# VL high, scenario A5 and A6 (p-adj = 0.006) 
+# VL high, scenario A5 and A7 (p-adj = 0.003) 
 
 
 # based on the significant two-way interaction effect variant:scenario
@@ -865,56 +861,56 @@ data_no_outliers2 %>%
 data_no_outliers2 %>% 
   group_by(scenario) %>%
   pairwise_t_test(time_s ~ variant, p.adjust.method = "bonferroni") %>% View()
-# scenario A2, variant 1 vs 4 (p-adj = 0.009)
-# scenario A2, variant 2 vs 4 (p-adj = 0.003)
+# scenario A2, V3 vs V4 (p-adj = 0.009)
+# scenario A2, V2 vs V4 (p-adj = 0.003)
 
 data_no_outliers2 %>% 
   group_by(variant) %>%
   anova_test(time_s~scenario) %>% View()
-# variant 1,2,3 and 4
+# V1, V2, V3 and V4
 
 data_no_outliers2 %>% 
   group_by(variant) %>%
   pairwise_t_test(time_s ~ scenario, paired = TRUE, p.adjust.method = "bonferroni") %>% View()
-# variant 1, scenario A1 vs A4 (p-adj = 0.001)
-# variant 1, scenario A1 vs A7 (p-adj = 0.001)
-# variant 1, scenario A1 vs A8 (p-adj = 0.001)
-# variant 1, scenario A5 vs A7 (p-adj = 0.001)
-# variant 1, scenario A5 vs A8 (p-adj = 0.001)
-# variant 2, scenario A1 vs A4 (p-adj = 0.001)
-# variant 2, scenario A1 vs A7 (p-adj = 0.001)
-# variant 2, scenario A3 vs A4 (p-adj = 0.001)
-# variant 2, scenario A3 vs A7 (p-adj = 0.001)
-# variant 2, scenario A3 vs A8 (p-adj = 0.001)
-# variant 2, scenario A4 vs A5 (p-adj = 0.001)
-# variant 2, scenario A5 vs A7 (p-adj = 0.001)
-# variant 2, scenario A5 vs A8 (p-adj = 0.001)
-# variant 3, scenario A1 vs A2 (p-adj = 0.001)
-# variant 3, scenario A1 vs A4 (p-adj = 0.001)
-# variant 3, scenario A1 vs A6 (p-adj = 0.001)
-# variant 3, scenario A1 vs A7 (p-adj = 0.001)
-# variant 3, scenario A1 vs A8 (p-adj = 0.001)
-# variant 3, scenario A2 vs A5 (p-adj = 0.001)
-# variant 3, scenario A3 vs A4 (p-adj = 0.001)
-# variant 3, scenario A3 vs A7 (p-adj = 0.001)
-# variant 3, scenario A3 vs A8 (p-adj = 0.001)
-# variant 3, scenario A4 vs A5 (p-adj = 0.001)
-# variant 3, scenario A5 vs A8 (p-adj = 0.001)
-# variant 4, scenario A1 vs A2 (p-adj = 0.001)
-# variant 4, scenario A1 vs A3 (p-adj = 0.001)
-# variant 4, scenario A1 vs A4 (p-adj = 0.001)
-# variant 4, scenario A1 vs A6 (p-adj = 0.001)
-# variant 4, scenario A1 vs A7 (p-adj = 0.001)
-# variant 4, scenario A1 vs A8 (p-adj = 0.001)
-# variant 4, scenario A2 vs A3 (p-adj = 0.001)
-# variant 4, scenario A3 vs A4 (p-adj = 0.001)
-# variant 4, scenario A3 vs A5 (p-adj = 0.001)
-# variant 4, scenario A3 vs A6 (p-adj = 0.001)
-# variant 4, scenario A3 vs A7 (p-adj = 0.001)
-# variant 4, scenario A3 vs A8 (p-adj = 0.001)
-# variant 4, scenario A4 vs A5 (p-adj = 0.001)
-# variant 4, scenario A5 vs A6 (p-adj = 0.001)
-# variant 4, scenario A5 vs A8 (p-adj = 0.001)
+# V1, scenario A1 vs A2 (p-adj = 0.001)
+# V1, scenario A1 vs A4 (p-adj = 0.001)
+# V1, scenario A1 vs A6 (p-adj = 0.001)
+# V1, scenario A1 vs A7 (p-adj = 0.001)
+# V1, scenario A1 vs A8 (p-adj = 0.001)
+# V1, scenario A2 vs A5 (p-adj = 0.001)
+# V1, scenario A3 vs A4 (p-adj = 0.001)
+# V1, scenario A3 vs A7 (p-adj = 0.001)
+# V1, scenario A3 vs A8 (p-adj = 0.001)
+# V1, scenario A4 vs A5 (p-adj = 0.001)
+# V1, scenario A5 vs A8 (p-adj = 0.001)
+# V2, scenario A1 vs A4 (p-adj = 0.001)
+# V2, scenario A1 vs A7 (p-adj = 0.001)
+# V2, scenario A3 vs A4 (p-adj = 0.001)
+# V2, scenario A3 vs A7 (p-adj = 0.001)
+# V2, scenario A3 vs A8 (p-adj = 0.001)
+# V2, scenario A4 vs A5 (p-adj = 0.001)
+# V2, scenario A5 vs A7 (p-adj = 0.001)
+# V2, scenario A5 vs A8 (p-adj = 0.001)
+# V3, scenario A1 vs A4 (p-adj = 0.001)
+# V3, scenario A1 vs A7 (p-adj = 0.001)
+# V3, scenario A1 vs A8 (p-adj = 0.001)
+# V3, scenario A5 vs A7 (p-adj = 0.001)
+# V3, scenario A5 vs A8 (p-adj = 0.001)
+# V4, scenario A1 vs A2 (p-adj = 0.001)
+# V4, scenario A1 vs A3 (p-adj = 0.001)
+# V4, scenario A1 vs A4 (p-adj = 0.001)
+# V4, scenario A1 vs A6 (p-adj = 0.001)
+# V4, scenario A1 vs A7 (p-adj = 0.001)
+# V4, scenario A1 vs A8 (p-adj = 0.001)
+# V4, scenario A2 vs A3 (p-adj = 0.001)
+# V4, scenario A3 vs A4 (p-adj = 0.001)
+# V4, scenario A3 vs A5 (p-adj = 0.001)
+# V4, scenario A3 vs A6 (p-adj = 0.001)
+# V4, scenario A3 vs A7 (p-adj = 0.001)
+# V4, scenario A3 vs A8 (p-adj = 0.001)
+# V4, scenario A4 vs A5 (p-adj = 0.001)
+# V4, scenario A5 vs A6 (p-adj = 0.001)
+# V4, scenario A5 vs A8 (p-adj = 0.001)
 
 # based on the significant main effect scenario
 data_no_outliers2 %>% 
@@ -983,7 +979,7 @@ brant(model3)
 # For viewers exposed to scenario A2, the odds of obtaining a higher x_score are 8.36 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
-# For viewers exposed to scenario A4, the odds of obtaining a higher x_score are 100.63 times that
+# For viewers exposed to scenario A4, the odds of obtaining a higher x_score are 100.64 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
 # For viewers exposed to scenario A6, the odds of obtaining a higher x_score are 10.78 times that
@@ -995,26 +991,26 @@ brant(model3)
 # For viewers exposed to scenario A8, the odds of obtaining a higher x_score are 7.42 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
-# 1/0.4154789 = 2.41
+# 1/0.4154784 = 2.41
 # For viewers with a medium VL level, the odds of obtaining a higher x_score are 2.41 times that
 # of viewers with a low VL level, holding constant all other variables.
 
 
 # Post-hoc power analysis
 table(data$x_score)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 8.3583326, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.8584003, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 100.6323300, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.4898611, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.7767747, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.6395231, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 7.4199312, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.7634126, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.6828229, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.1021929, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.4154789, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.2447051, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.9379071, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 8.3579194, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.8584414, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 100.6440157, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.4898922, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.7764831, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.6393068, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 7.4200965, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.6828484, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.7634316, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.1022089, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.2447333, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.4154784, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.0662110, 384, alpha=0.05)
 
 
 
@@ -1038,11 +1034,11 @@ brant(model4)
 # The proportional odds assumption holds at significance level alpha = 0.01
 
 # Results
-# 1/0.4138966 = 2.42
+# 1/0.4139182 = 2.42
 # For viewers exposed to scenario A1, the odds of obtaining a higher y_score are 2.42 times that
 # of viewers exposed to scenario A2, holding constant all other variables.
 
-# 1/0.1680516 = 5.95
+# 1/0.1680575 = 5.95
 # For viewers exposed to scenario A1, the odds of obtaining a higher y_score are 5.95 times that
 # of viewers exposed to scenario A3, holding constant all other variables.
 
@@ -1052,36 +1048,36 @@ brant(model4)
 # For viewers exposed to scenario A7, the odds of obtaining a higher y_score are 3.35 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
-# 1/0.4177607 = 2.39
+# 1/0.4177616 = 2.39
 # For viewers watching the GIFs with smooth transitions, the odds of obtaining a higher y_score are 2.39 times that
 # of viewers watching the static visualizations, holding constant all other variables.
 
-# 1/0.5006004 = 2
+# 1/0.5005989 = 2
 # For viewers watching the GIFs with smooth transitions, the odds of obtaining a higher y_score are 2 times that
 # of viewers watching data-videos, holding constant all other variables.
-
-# 1/0.4624913 = 2.16
-# For viewers with a medium VL level, the odds of obtaining a higher y_score are 2.16 times that
-# of viewers with a low VL level, holding constant all other variables.
 
 # For viewers with a high VL level, the odds of obtaining a higher y_score are 2.19 times that
 # of viewers with a medium VL level, holding constant all other variables.
 
+# 1/0.4625148 = 2.16
+# For viewers with a medium VL level, the odds of obtaining a higher y_score are 2.16 times that
+# of viewers with a low VL level, holding constant all other variables.
+
 # Post-hoc power analysis
 table(data$y_score)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4138966, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.1680516, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 7.6226986, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 1.3247602, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.8975530, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 3.3471212, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 1.4366344, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4177607, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.8760243, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.5006004, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4624913, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 2.1946928, 384, alpha=0.05)
-popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 1.3446283, 384, alpha=0.05)
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4139182, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.1680575, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 7.6228903, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 1.3247366, 384, alpha=0.05)
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.8975649, 384, alpha=0.05)
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 3.3473309, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 1.4366697, 384, alpha=0.05)
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.8760084, 384, alpha=0.05)
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4177616, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.5005989, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 2.1946959, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.4625148, 384, alpha=0.05) #
+popower(c(11/384,  16/384,  40/384, 56/384, 261/384), 0.7437131, 384, alpha=0.05)
 
 
 
@@ -1120,7 +1116,7 @@ brant(model5)
 # For viewers exposed to scenario A8, the odds of obtaining a higher z_score are 4.97 times that
 # of viewers exposed to scenario A1, holding constant all other variables.
 
-# 1/0.5678096 = 1.76
+# 1/0.5678120 = 1.76
 # For viewers with a medium VL level, the odds of obtaining a higher z_score are 1.76 times that
 # of viewers with a low VL level, holding constant all other variables.
 
@@ -1129,19 +1125,19 @@ brant(model5)
 
 # Post-hoc power analysis
 table(data$z_score)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.4053220, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.5783764, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.2183789, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.6605471, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 2.5919467, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.4091959, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.9698207, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.9785568, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.9481189, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.2661225, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.5678096, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.8370071, 384, alpha=0.05)
-popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.8485990, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.4050876, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.5782732, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 10.2187067, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.6604435, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 2.5918416, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.4090126, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 4.9695496, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.9481669, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.9785846, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.2661526, 384, alpha=0.05)
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.8369645, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 0.5678120, 384, alpha=0.05) #
+popower(c(1/384,  8/384,  32/384, 73/384, 270/384), 1.1783982, 384, alpha=0.05)
 
 
 
